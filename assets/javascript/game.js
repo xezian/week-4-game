@@ -11,40 +11,35 @@ $( document ).ready(function() {
                 type: "Thief",
                 hitPoints: 120,
                 counterPower: 12,
-                attackPower: 8,
-                isDefeated: false
+                attackPower: 8
             },
             buddyTwo = {
                 name: "Rocky",
                 type: "Sorcerer",
                 hitPoints: 150,
                 counterPower: 18,
-                attackPower: 9,
-                isDefeated: false
+                attackPower: 9
             },
             buddyThree = {
                 name: "Spike",
                 type: "Fighter",
                 hitPoints: 160,
                 counterPower: 15,
-                attackPower: 11,
-                isDefeated: false
+                attackPower: 11
             },
             buddyFour = {
                 name: "Fazor",
                 type: "Rogue",
                 hitPoints: 180,
                 counterPower: 20,
-                attackPower: 15,
-                isDefeated: false
+                attackPower: 15
             },
             buddyFive = {
                 name: "King Loren",
                 type: "King",
                 hitPoints: 190,
                 counterPower: 16,
-                attackPower: 7,
-                isDefeated: false
+                attackPower: 7
             }
         ];
 // created variables to represent states of the game
@@ -64,13 +59,17 @@ $( document ).ready(function() {
                 var buddyButton = $("<button>");
                 buddyButton.addClass("btn buddy-button btn-info w-100");
                 buddyButton.attr("data-hp", buddyArray[i].hitPoints);
+                buddyButton.attr("data-ap", buddyArray[i].attackPower);
+                buddyButton.attr("data-cp", buddyArray[i].counterPower);
                 buddyButton.html(buddyArray[i].name + "<br>" + buddyArray[i].hitPoints);
                 $("#buddybank").append(newDiv);
                 $(`#${buddyArray[i].type}`).append(buddyButton);
             }
 // remove start button ;)
             $("#message").empty();  
-            $("#start").empty();     
+            $("#start").empty();    
+// created event listeners to on click events for the buddy buttons
+            
 // created a button for attack
 
 // created on click events to handle the attack being clicked
