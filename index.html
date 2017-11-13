@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+    <head>
+    <!-- Added link to the jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Added a link to game.js -->
+    <script src="assets/javascript/game.js"></script>
+    <!-- Added a link to meyerweb reset -->
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!-- Added a link to stylesheet -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <title>Battle Buddies</title>
+    </head>
+    <body>
+    <!-- main container -->
+        <div class="container-fluid">
+    <!-- container for game messages -->
+            <div class="container-fluid">
+                <div class="row h-25 justify-content-center" id="message">
+                    <h1>Welcome to the wonderful world of Battle Buddies!</h1>
+                </div>
+                <div class ="row justify-content-center" id="start"></div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-1.5"></div>
+                    <div class="col-2" id="buddybank"></div>
+                    <div class="col-5" id="arena">
+                        <div class="row" id="buddy"></div>
+                        <div class="row" id="opponent"></div>
+                    </div>
+                    <div class="col-2" id="graveyard"></div>
+                    <div class="col-1.5"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
