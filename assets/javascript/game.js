@@ -63,6 +63,7 @@ $( document ).ready(function() {
                 buddyButton.attr("data-hp", buddyArray[i].hitPoints);
                 buddyButton.attr("data-ap", buddyArray[i].attackPower);
                 buddyButton.attr("data-cp", buddyArray[i].counterPower);
+                buddyButton.attr("data-bp", buddyArray[i].attackPower);
                 buddyButton.attr("name", buddyArray[i].name)
                 buddyButton.html(buddyArray[i].name + "<br>" + buddyArray[i].hitPoints);
                 $("#buddybank").append(newDiv);
@@ -122,9 +123,43 @@ $( document ).ready(function() {
             $(".buddy-button").appendTo("#buddybank");
             }
         });
-// created on click events to handle the attack being clicked pitting the chosen buddy's attack power against the opponent buddy's counter power while increasing the chosen buddy's attack power
-        
-// created on click events to handle the buddy buttons being clicked
+// --> on click event listener to handle the attack being clicked pitting the chosen buddy's attack power against the opponent buddy's counter power while increasing the chosen buddy's attack power
+        $(document).on("click", ".attack-button", function () {
+            var opponentsHitPoints = parseInt($(".opponent").attr("data-hp"));
+            var buddyHitPoints = parseInt($(".chosen-buddy").attr("data-hp"));
+            var opponentsCounterPower = parseInt($(".opponent").attr("data-cp"));
+            var buddyAttackPower = parseInt($(".chosen-buddy").attr("data-ap"));
+            var baseAttackPower = parseInt($(".chosen-buddy").attr("data-bp"));
+// * SOUND * ANIMATION * MUSIC * attack the opponent and the opponenet attacks back
+            opponentsHitPoints = (opponentsHitPoints - buddyAttackPower);
+// ?? delay ??
+            buddyHitPoints = (buddyHitPoints - opponentsCounterPower);
+// increase attack points by their base amount
+            buddyAttackPower = (buddyAttackPower + baseAttackPower);
+// store those values in the html elements
+            $(".opponent").attr("data-hp", opponentsHitPoints);
+            $(".chosen-buddy").attr("data-ap", buddyAttackPower);
+            $(".chosen-buddy").attr("data-hp", buddyHitPoints);
+// print those values to the buddies
+            $(".opponent").html($(".opponent").attr("name") + "<br>" + opponentsHitPoints);
+            $(".chosen-buddy").html($(".chosen-buddy").attr("name") + "<br>" + buddyHitPoints);
+            if (buddyHitPoints < 1) {
+                alert("you died");
+                $("#top-content").empty();
+                $("#buddybank").empty();
+                $("#buddy").empty();
+                $("#opponent").empty();
+                $("#enemybuddies").empty();
+                $("#attack").empty(); 
+                $("#graveyard").empty();
+                $("#start").append(startButton);
+            } else if (opponentsHitPoints < 1) {
+                $(".opponent").removeClass("opponent btn-warning w-100").addClass("dead-buddy btn-light w-20");
+                $(".dead-buddy").appendTo("#graveyard");
+                isOpponentReady = false;
+                $("#opponent").empty();
+            }
+        })
     });
 });
 
