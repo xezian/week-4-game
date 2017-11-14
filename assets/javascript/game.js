@@ -44,6 +44,7 @@ $( document ).ready(function() {
         ];
 // create variables to represent states of the game
         var isOpponentReady = false;
+        var deadBuddyCounter;
 // create a start button we can use to start the game
         var startButton = $("<button>");
         startButton.addClass("btn start-button btn-warning");
@@ -51,7 +52,8 @@ $( document ).ready(function() {
         $("#start").append(startButton);
 // * MUSIC * start screen music default muted (a button for that will need to be created)
 // event listener to on click event to start the whole game!
-        $(document).on("click", ".start-button", function() {        
+        $(document).on("click", ".start-button", function() {
+            $("#graveyard").empty();      
 // * MUSIC * maybe none when you first click start
 // create and append buttons to the document representing the buddies from the array
             for (var i = 0; i < buddyArray.length; i++) {
@@ -68,6 +70,7 @@ $( document ).ready(function() {
                 buddyButton.html(buddyArray[i].name + "<br>" + buddyArray[i].hitPoints);
                 $("#buddybank").append(newDiv);
                 $(`#${buddyArray[i].type}`).append(buddyButton);
+                deadBuddyCounter = 0;
 // * ANIMATE * SOUND each buddy has it's own special sound here
             }
 // remove the start button after it's been clicked and set loose the buddies ;)
@@ -145,6 +148,7 @@ $( document ).ready(function() {
             $(".chosen-buddy").html($(".chosen-buddy").attr("name") + "<br>" + buddyHitPoints);
             if (buddyHitPoints < 1) {
                 alert("you died");
+// * SOUND * ANIMATE * MUSIC death game over
                 $("#top-content").empty();
                 $("#buddybank").empty();
                 $("#buddy").empty();
@@ -153,11 +157,25 @@ $( document ).ready(function() {
                 $("#attack").empty(); 
                 $("#graveyard").empty();
                 $("#start").append(startButton);
+                isOpponentReady = false;
             } else if (opponentsHitPoints < 1) {
                 $(".opponent").removeClass("opponent btn-warning w-100").addClass("dead-buddy btn-light w-20");
                 $(".dead-buddy").appendTo("#graveyard");
-                isOpponentReady = false;
+                $(".dead-buddy").html($(".dead-buddy").attr("name") + "<br>" + "dead.")
                 $("#opponent").empty();
+                isOpponentReady = false;
+                deadBuddyCounter++;
+                if (deadBuddyCounter >= buddyArray.length - 1) {
+                    alert("you win!");
+// * SOUND * ANIMATE * MUSIC yay you won all your buddies are dead
+                    $("#top-content").empty();
+                    $("#buddybank").empty();
+                    $("#buddy").empty();
+                    $("#opponent").empty();
+                    $("#enemybuddies").empty();
+                    $("#attack").empty();
+                    $("#start").append(startButton);
+                }
             }
         })
     });
