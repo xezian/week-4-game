@@ -42,16 +42,19 @@ $( document ).ready(function() {
                 attackPower: 7
             }
         ];
-// created variables to represent states of the game
-        var battlePossible = false;   
-// created a start button we can use to start the game
+// create variables to represent states of the game
+        var isOpponentReady = false; 
+        var attackButtonExists = false;  
+// create a start button we can use to start the game
         var startButton = $("<button>");
         startButton.addClass("btn start-button btn-warning");
         startButton.text("START");
         $("#start").append(startButton);
-// created an on click event to start the whole game!
+// * MUSIC * start screen music default muted (a button for that will need to be created)
+// event listener to on click event to start the whole game!
         $(document).on("click", ".start-button", function() {        
-// created and appended buttons to the document representing the buddies from the array
+// * MUSIC * maybe none when you first click start
+// create and append buttons to the document representing the buddies from the array
             for (var i = 0; i < buddyArray.length; i++) {
                 var newDiv = $("<div>");
                 newDiv.addClass("row buddyrow");
@@ -65,37 +68,55 @@ $( document ).ready(function() {
                 buddyButton.html(buddyArray[i].name + "<br>" + buddyArray[i].hitPoints);
                 $("#buddybank").append(newDiv);
                 $(`#${buddyArray[i].type}`).append(buddyButton);
+// * ANIMATE * SOUND each buddy has it's own special sound here
             }
-// remove start button ;)
-            $("#message").empty();  
-            $("#start").empty();          
-// created event listener to on click events for the buddy buttons
-            $(document).on("click", ".buddy-button", function () {
+// remove the start button after it's been clicked and set loose the buddies ;)
+            $("#top-message").empty();  
+            $("#start").empty();  
+        });        
+// event listener to on click events for the buddy buttons
+        $(document).on("click", ".buddy-button", function () {
 // this is where the setup happens for the game. the buddy you click gets appended to the arena <div id="buddy">, and all the other buddies go into the defender pool. <div id="enemybuddies">.
+            $(this).removeClass("buddy-button").addClass("chosen-buddy");
+            $(this).appendTo("#buddy");
+// * SOUND * select your chosen buddy
+            $(".buddy-button").removeClass("buddy-button btn-info").addClass("enemy-button btn-danger");
+// * ANIMATE * SOUND * buddybank not chosen buddies become enemybuddies
+            $(".enemy-button").appendTo("#enemybuddies");
+// * MUSIC * chosen buddy selected
+        });
+// event listener to on click events for the enemy buttons
+        $(document).on("click", ".enemy-button", function () {
+            $("#top-message").empty();  
+            if (isOpponentReady) {
+            $("#top-message").text(`${$(".opponent").attr("name")} is already in the arena right now`)
+// * SOUND * attempt to select enemy enemy already selected
+            } else {
+// * SOUND * select enemy as next opponent
+            $(this).removeClass("enemy-button").addClass("opponent");
+            $(this).appendTo("#opponent");
+            isOpponentReady = true;
+// * MUSIC * battle is possible
+            }
+        });
+// event listener for the opponent button to make the opponent leave and go back to enemybuddies
 
-// I started by replacing my alert with a confirm
-                var buddyChosen = confirm("do you choose " + $(this).attr("name") + "?");
-                if (buddyChosen) {
-                    $(this).removeClass("buddy-button").addClass("chosen-buddy");
-                    $(this).appendTo("#buddy");
-                    $(".buddy-button").removeClass("buddy-button btn-info").addClass("enemy-button btn-danger");
-                    $(".enemy-button").appendTo("#enemybuddies");
-                    }
-                });
-// created event listener to on click events for the enemy buttons
-                $(document).on("click", ".enemy-button", function () {
-                    var enemyChosen = confirm("OK, " + $(".chosen-buddy").attr("name") + ". Will you fight " + $(this).attr("name") + "?");
-                    if (enemyChosen) {
-                        $(this).removeClass("enemy-button").addClass("opponent");
-                        $(this).appendTo("#opponent");
-                };
-            });
-// created a button for attack
+// event listener for the chosen buddy button, such that if there is an opponent they may not retreat but if there is no opponent they may go back and also call all other buddies back to the buddybank also resetting their attack power
 
-// created on click events to handle the attack being clicked
+// function to create and append button for attack        
+        $(document).on("click", function () { 
+            if (attackButtonExists) {
+            } else if (isOpponentReady) {
+            var attackButton = $("<button>");
+            attackButton.addClass("btn attack-button btn-dark");
+            attackButton.text("ATTACK!");
+            attackButton.appendTo("#attack");
+            attackButtonExists = true;
+            } 
+        });
+// created on click events to handle the attack being clicked pitting the chosen buddy's attack power against the opponent buddy's counter power while increasing the chosen buddy's attack power
 
 // created on click events to handle the buddy buttons being clicked
-        });
     });
 });
 
