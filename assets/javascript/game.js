@@ -43,8 +43,7 @@ $( document ).ready(function() {
             }
         ];
 // create variables to represent states of the game
-        var isOpponentReady = false; 
-        var attackButtonExists = false;  
+        var isOpponentReady = false;
 // create a start button we can use to start the game
         var startButton = $("<button>");
         startButton.addClass("btn start-button btn-warning");
@@ -97,25 +96,34 @@ $( document ).ready(function() {
             $(this).appendTo("#opponent");
             isOpponentReady = true;
 // * MUSIC * battle is possible
-            }
-        });
-// event listener for the opponent button to make the opponent leave and go back to enemybuddies
-
-// event listener for the chosen buddy button, such that if there is an opponent they may not retreat but if there is no opponent they may go back and also call all other buddies back to the buddybank also resetting their attack power
-
-// function to create and append button for attack        
-        $(document).on("click", function () { 
-            if (attackButtonExists) {
-            } else if (isOpponentReady) {
+// create and append button for attack
             var attackButton = $("<button>");
             attackButton.addClass("btn attack-button btn-dark");
             attackButton.text("ATTACK!");
             attackButton.appendTo("#attack");
-            attackButtonExists = true;
-            } 
+            }
+        });
+// event listener for the opponent button to make the opponent leave and go back to enemybuddies also clears attack button
+        $(document).on("click", ".opponent", function() {
+            $(this).removeClass("opponent").addClass("enemy-button");
+            $(this).appendTo("#enemybuddies");
+            $("#attack").empty();
+            $("#top-message").empty();
+            isOpponentReady = false;
+        });
+// event listener for the chosen buddy button, such that if there is an opponent they may not retreat but if there is no opponent they may go back and also call all other buddies back to the buddybank also resetting their attack power
+        $(document).on("click", ".chosen-buddy", function () {
+            if (isOpponentReady) {
+            $("#top-message").text(`${$(".opponent").attr("name")} is already in the arena right now`)
+            } else {
+            $(this).removeClass("chosen-buddy").addClass("buddy-button");
+            $(this).appendTo("#buddybank");
+            $(".enemy-button").removeClass("enemy-button btn-danger").addClass("buddy-button btn-info");
+            $(".buddy-button").appendTo("#buddybank");
+            }
         });
 // created on click events to handle the attack being clicked pitting the chosen buddy's attack power against the opponent buddy's counter power while increasing the chosen buddy's attack power
-
+        
 // created on click events to handle the buddy buttons being clicked
     });
 });
