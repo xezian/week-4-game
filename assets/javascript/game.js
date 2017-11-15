@@ -45,6 +45,7 @@ $( document ).ready(function() {
 // create variables to represent states of the game
         var isOpponentReady = false;
         var deadBuddyCounter;
+// create functions to call inside the .on("click") functions
 // create a start button we can use to start the game
         var startButton = $("<button>");
         startButton.addClass("btn start-button btn-warning");
