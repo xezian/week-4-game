@@ -53,7 +53,9 @@ $( document ).ready(function() {
 // * MUSIC * start screen music default muted (a button for that will need to be created)
 // event listener to on click event to start the whole game!
         $(document).on("click", ".start-button", function() {
-            $("#graveyard").empty();      
+            $("#graveyard").empty();
+            $("#opponent").empty();
+            $("#enemybuddies").empty();     
 // * MUSIC * maybe none when you first click start
 // create and append buttons to the document representing the buddies from the array
             for (var i = 0; i < buddyArray.length; i++) {
@@ -61,7 +63,7 @@ $( document ).ready(function() {
                 newDiv.addClass("row buddyrow");
                 newDiv.attr("id", buddyArray[i].type);
                 var buddyButton = $("<button>");
-                buddyButton.addClass("btn buddy-button btn-info w-100");
+                buddyButton.addClass("btn buddy-button btn-info w-100 m-4");
                 buddyButton.attr("data-hp", buddyArray[i].hitPoints);
                 buddyButton.attr("data-ap", buddyArray[i].attackPower);
                 buddyButton.attr("data-cp", buddyArray[i].counterPower);
@@ -128,6 +130,7 @@ $( document ).ready(function() {
         });
 // --> on click event listener to handle the attack being clicked pitting the chosen buddy's attack power against the opponent buddy's counter power while increasing the chosen buddy's attack power
         $(document).on("click", ".attack-button", function () {
+            if (isOpponentReady) {
             var opponentsHitPoints = parseInt($(".opponent").attr("data-hp"));
             var buddyHitPoints = parseInt($(".chosen-buddy").attr("data-hp"));
             var opponentsCounterPower = parseInt($(".opponent").attr("data-cp"));
@@ -146,23 +149,26 @@ $( document ).ready(function() {
 // print those values to the buddies
             $(".opponent").html($(".opponent").attr("name") + "<br>" + opponentsHitPoints);
             $(".chosen-buddy").html($(".chosen-buddy").attr("name") + "<br>" + buddyHitPoints);
+            } else {
+            $("#top-message").text("there is no BUDDY to fight!")    
+            }
             if (buddyHitPoints < 1) {
                 alert("you died");
 // * SOUND * ANIMATE * MUSIC death game over
+                $(".chosen-buddy").html($(".chosen-buddy").attr("name") + "<br>" + "dead.");
+                $(".chosen-buddy").removeClass("chosen-buddy btn-info w-100").addClass("dead-buddy btn-light w-20");
+                $(".dead-buddy").appendTo("#graveyard");
                 $("#top-content").empty();
-                $("#buddybank").empty();
                 $("#buddy").empty();
-                $("#opponent").empty();
-                $("#enemybuddies").empty();
-                $("#attack").empty(); 
-                $("#graveyard").empty();
+                $("#attack").empty();
                 $("#start").append(startButton);
                 isOpponentReady = false;
             } else if (opponentsHitPoints < 1) {
+                $(".opponent").html($(".opponent").attr("name") + "<br>" + "dead.");
                 $(".opponent").removeClass("opponent btn-warning w-100").addClass("dead-buddy btn-light w-20");
                 $(".dead-buddy").appendTo("#graveyard");
-                $(".dead-buddy").html($(".dead-buddy").attr("name") + "<br>" + "dead.")
                 $("#opponent").empty();
+                $("#attack").empty();
                 isOpponentReady = false;
                 deadBuddyCounter++;
                 if (deadBuddyCounter >= buddyArray.length - 1) {

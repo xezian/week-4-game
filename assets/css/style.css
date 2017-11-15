@@ -1,0 +1,7 @@
+body {
+    background-color: #dedefa;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+}
