@@ -1,5 +1,10 @@
-body {
-    background-color: #dedefa;
+.buddy-image {
+    width: 70px;
+    height: 100px;
+}
+.big-image {
+    width: 210px;
+    height: 300px;
 }
 .footer {
     position: fixed;

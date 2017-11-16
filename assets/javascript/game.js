@@ -11,35 +11,40 @@ $( document ).ready(function() {
                 type: "thief",
                 hitPoints: 120,
                 counterPower: 12,
-                attackPower: 8
+                attackPower: 8,
+                image: "assets/images/schmilbert.png"
             },
             buddyTwo = {
                 name: "Rocky",
                 type: "sorcerer",
                 hitPoints: 150,
                 counterPower: 18,
-                attackPower: 9
+                attackPower: 9,
+                image: "assets/images/rocky.png"
             },
             buddyThree = {
                 name: "Spike",
                 type: "fighter",
                 hitPoints: 160,
                 counterPower: 15,
-                attackPower: 11
+                attackPower: 11,
+                image: "assets/images/spike.png",
             },
             buddyFour = {
                 name: "Fazor",
                 type: "rogue",
                 hitPoints: 180,
                 counterPower: 20,
-                attackPower: 15
+                attackPower: 15,
+                image: "assets/images/fazor.png"
             },
             buddyFive = {
                 name: "King Loren",
                 type: "king",
                 hitPoints: 190,
                 counterPower: 16,
-                attackPower: 7
+                attackPower: 7,
+                image: "assets/images/kingloren.png"
             }
         ];
 // create variables to represent states of the game
@@ -64,14 +69,20 @@ $( document ).ready(function() {
                 newDiv.addClass("row buddyrow");
                 newDiv.attr("id", buddyArray[i].type);
                 var buddyButton = $("<button>");
-                buddyButton.addClass("btn buddy-button btn-info w-100 m-4");
+                var buddyImage = $("<img>");
+                buddyImage.addClass("img-fluid buddy-image");
+                buddyImage.attr("id", buddyArray[i].name);
+                buddyImage.attr("src", buddyArray[i].image);
+                buddyButton.addClass("buddy-button btn w-100");
                 buddyButton.attr("data-hp", buddyArray[i].hitPoints);
                 buddyButton.attr("data-ap", buddyArray[i].attackPower);
                 buddyButton.attr("data-cp", buddyArray[i].counterPower);
                 buddyButton.attr("data-bp", buddyArray[i].attackPower);
-                buddyButton.attr("name", buddyArray[i].name)
+                buddyButton.attr("style", "background-color:transparent;");
+                buddyButton.attr("name", buddyArray[i].name);
                 buddyButton.html(buddyArray[i].name + "<br>" + buddyArray[i].hitPoints);
                 $("#buddybank").append(newDiv);
+                buddyButton.append(buddyImage);
                 $(`#${buddyArray[i].type}`).append(buddyButton);
                 deadBuddyCounter = 0;
 // * ANIMATE * SOUND each buddy has it's own special sound here
@@ -84,9 +95,10 @@ $( document ).ready(function() {
         $(document).on("click", ".buddy-button", function () {
 // this is where the setup happens for the game. the buddy you click gets appended to the arena <div id="buddy">, and all the other buddies go into the defender pool. <div id="enemybuddies">.
             $(this).removeClass("buddy-button").addClass("chosen-buddy");
+            $(this).find(".buddy-image").removeClass("buddy-image").addClass("big-image");
             $(this).appendTo("#buddy");
 // * SOUND * select your chosen buddy
-            $(".buddy-button").removeClass("buddy-button btn-info").addClass("enemy-button btn-danger");
+            $(".buddy-button").removeClass("buddy-button").addClass("enemy-button");
 // * ANIMATE * SOUND * buddybank not chosen buddies become enemybuddies
             $(".enemy-button").appendTo("#enemybuddies");
 // * MUSIC * chosen buddy selected
@@ -100,12 +112,13 @@ $( document ).ready(function() {
             } else {
 // * SOUND * select enemy as next opponent
             $(this).removeClass("enemy-button").addClass("opponent");
+            $(this).find(".buddy-image").removeClass("buddy-image").addClass("big-image");
             $(this).appendTo("#opponent");
             isOpponentReady = true;
 // * MUSIC * battle is possible
 // create and append button for attack
             var attackButton = $("<button>");
-            attackButton.addClass("btn attack-button btn-dark");
+            attackButton.addClass("btn attack-button btn-danger");
             attackButton.text("ATTACK!");
             attackButton.appendTo("#attack");
             }
@@ -113,6 +126,7 @@ $( document ).ready(function() {
 // event listener for the opponent button to make the opponent leave and go back to enemybuddies also clears attack button
         $(document).on("click", ".opponent", function() {
             $(this).removeClass("opponent").addClass("enemy-button");
+            $(this).find(".big-image").removeClass("big-image").addClass("buddy-image");
             $(this).appendTo("#enemybuddies");
             $("#attack").empty();
             $("#top-message").empty();
@@ -124,8 +138,9 @@ $( document ).ready(function() {
             $("#top-message").text(`${$(".opponent").attr("name")} is already in the arena right now`)
             } else {
             $(this).removeClass("chosen-buddy").addClass("buddy-button");
+            $(this).find(".big-image").removeClass("big-image").addClass("buddy-image");
             $(this).appendTo("#buddybank");
-            $(".enemy-button").removeClass("enemy-button btn-danger").addClass("buddy-button btn-info");
+            $(".enemy-button").removeClass("enemy-button").addClass("buddy-button");
             $(".buddy-button").appendTo("#buddybank");
             }
         });
@@ -148,16 +163,23 @@ $( document ).ready(function() {
             $(".chosen-buddy").attr("data-ap", buddyAttackPower);
             $(".chosen-buddy").attr("data-hp", buddyHitPoints);
 // print those values to the buddies
+            var $oppimg = $(".opponent").find('img');
+            var $budimg = $(".chosen-buddy").find('img');
             $(".opponent").html($(".opponent").attr("name") + "<br>" + opponentsHitPoints);
             $(".chosen-buddy").html($(".chosen-buddy").attr("name") + "<br>" + buddyHitPoints);
+            $(".opponent").append($oppimg);
+            $(".chosen-buddy").append($budimg);
             } else {
             $("#top-message").text("there is no BUDDY to fight!")    
             }
             if (buddyHitPoints < 1) {
                 alert("you died");
 // * SOUND * ANIMATE * MUSIC death game over
+                $budimg = $(".chosen-buddy").find('img');
                 $(".chosen-buddy").html($(".chosen-buddy").attr("name") + "<br>" + "dead.");
-                $(".chosen-buddy").removeClass("chosen-buddy btn-info w-100").addClass("dead-buddy btn-light w-20");
+                $budimg.removeClass("big-image").addClass("buddy-image");
+                $(".chosen-buddy").append($budimg);
+                $(".chosen-buddy").removeClass("chosen-buddy w-100").addClass("dead-buddy w-20");
                 $(".dead-buddy").appendTo("#graveyard");
                 $("#top-content").empty();
                 $("#buddy").empty();
@@ -165,8 +187,11 @@ $( document ).ready(function() {
                 $("#start").append(startButton);
                 isOpponentReady = false;
             } else if (opponentsHitPoints < 1) {
+                $oppimg = $(".opponent").find('img');
                 $(".opponent").html($(".opponent").attr("name") + "<br>" + "dead.");
-                $(".opponent").removeClass("opponent btn-warning w-100").addClass("dead-buddy btn-light w-20");
+                $oppimg.removeClass("big-image").addClass("buddy-image");
+                $(".opponent").append($oppimg);
+                $(".opponent").removeClass("opponent btn-warning w-100").addClass("dead-buddy btn-light w-20");  
                 $(".dead-buddy").appendTo("#graveyard");
                 $("#opponent").empty();
                 $("#attack").empty();
