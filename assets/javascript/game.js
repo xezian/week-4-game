@@ -61,7 +61,7 @@ $( document ).ready(function() {
         $(document).on("click", ".start-button", function() {
             $("#graveyard").empty();
             $("#opponent").empty();
-            $("#enemybuddies").empty();     
+            $("#enemybuddies").empty();   
 // * MUSIC * maybe none when you first click start
 // create and append buttons to the document representing the buddies from the array
             for (var i = 0; i < buddyArray.length; i++) {
@@ -70,7 +70,7 @@ $( document ).ready(function() {
                 newDiv.attr("id", buddyArray[i].type);
                 var buddyButton = $("<button>");
                 var buddyImage = $("<img>");
-                buddyImage.addClass("img-fluid buddy-image");
+                buddyImage.addClass("buddy-image");
                 buddyImage.attr("id", buddyArray[i].name);
                 buddyImage.attr("src", buddyArray[i].image);
                 buddyButton.addClass("buddy-button btn w-100");
@@ -90,7 +90,7 @@ $( document ).ready(function() {
 // remove the start button after it's been clicked and set loose the buddies ;)
             $("#top-message").empty();  
             $("#start").empty();  
-        });        
+        }); 
 // event listener to on click events for the buddy buttons
         $(document).on("click", ".buddy-button", function () {
 // this is where the setup happens for the game. the buddy you click gets appended to the arena <div id="buddy">, and all the other buddies go into the defender pool. <div id="enemybuddies">.
