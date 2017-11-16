@@ -4,9 +4,9 @@ $( document ).ready(function() {
 // this loads the window first
     $( window ).on( "load", function() {
     console.log( "window loaded" );
-// created an array containing all the buddies as objects
-        var buddyArray = [
-            buddyOne = {
+// created an array containing all the buds as objects
+        var budArray = [
+            budOne = {
                 name: "Schmilbert",
                 type: "thief",
                 hitPoints: 120,
@@ -14,7 +14,7 @@ $( document ).ready(function() {
                 attackPower: 8,
                 image: "assets/images/schmilbert.png"
             },
-            buddyTwo = {
+            budTwo = {
                 name: "Rocky",
                 type: "sorcerer",
                 hitPoints: 150,
@@ -22,7 +22,7 @@ $( document ).ready(function() {
                 attackPower: 9,
                 image: "assets/images/rocky.png"
             },
-            buddyThree = {
+            budThree = {
                 name: "Spike",
                 type: "fighter",
                 hitPoints: 160,
@@ -30,7 +30,7 @@ $( document ).ready(function() {
                 attackPower: 11,
                 image: "assets/images/spike.png",
             },
-            buddyFour = {
+            budFour = {
                 name: "Fazor",
                 type: "rogue",
                 hitPoints: 180,
@@ -38,7 +38,7 @@ $( document ).ready(function() {
                 attackPower: 15,
                 image: "assets/images/fazor.png"
             },
-            buddyFive = {
+            budFive = {
                 name: "King Loren",
                 type: "king",
                 hitPoints: 190,
@@ -49,7 +49,7 @@ $( document ).ready(function() {
         ];
 // create variables to represent states of the game
         var isOpponentReady = false;
-        var deadBuddyCounter;
+        var deadBudCounter;
 // create functions to call inside the .on("click") functions
 // create a start button we can use to start the game
         var startButton = $("<button>");
@@ -61,47 +61,47 @@ $( document ).ready(function() {
         $(document).on("click", ".start-button", function() {
             $("#graveyard").empty();
             $("#opponent").empty();
-            $("#enemybuddies").empty();   
+            $("#enemybuds").empty();   
 // * MUSIC * maybe none when you first click start
 // create and append buttons to the document representing the buddies from the array
-            for (var i = 0; i < buddyArray.length; i++) {
+            for (var i = 0; i < budArray.length; i++) {
                 var newDiv = $("<div>");
-                newDiv.addClass("row buddyrow");
-                newDiv.attr("id", buddyArray[i].type);
-                var buddyButton = $("<button>");
-                var buddyImage = $("<img>");
-                buddyImage.addClass("buddy-image");
-                buddyImage.attr("id", buddyArray[i].name);
-                buddyImage.attr("src", buddyArray[i].image);
-                buddyButton.addClass("buddy-button btn w-100");
-                buddyButton.attr("data-hp", buddyArray[i].hitPoints);
-                buddyButton.attr("data-ap", buddyArray[i].attackPower);
-                buddyButton.attr("data-cp", buddyArray[i].counterPower);
-                buddyButton.attr("data-bp", buddyArray[i].attackPower);
-                buddyButton.attr("style", "background-color:transparent;");
-                buddyButton.attr("name", buddyArray[i].name);
-                buddyButton.html(buddyArray[i].name + "<br>" + buddyArray[i].hitPoints);
-                $("#buddybank").append(newDiv);
-                buddyButton.append(buddyImage);
-                $(`#${buddyArray[i].type}`).append(buddyButton);
-                deadBuddyCounter = 0;
-// * ANIMATE * SOUND each buddy has it's own special sound here
+                newDiv.addClass("row budrow");
+                newDiv.attr("id", budArray[i].type);
+                var budButton = $("<button>");
+                var budImage = $("<img>");
+                budImage.addClass("bud-image");
+                budImage.attr("id", budArray[i].name);
+                budImage.attr("src", budArray[i].image);
+                budButton.addClass("bud-button btn w-100");
+                budButton.attr("data-hp", budArray[i].hitPoints);
+                budButton.attr("data-ap", budArray[i].attackPower);
+                budButton.attr("data-cp", budArray[i].counterPower);
+                budButton.attr("data-bp", budArray[i].attackPower);
+                budButton.attr("style", "background-color:transparent;");
+                budButton.attr("name", budArray[i].name);
+                budButton.html(budArray[i].name + "<br>" + budArray[i].hitPoints);
+                $("#budbank").append(newDiv);
+                budButton.append(budImage);
+                $(`#${budArray[i].type}`).append(budButton);
+                deadbudCounter = 0;
+// * ANIMATE * SOUND each bud has it's own special sound here
             }
 // remove the start button after it's been clicked and set loose the buddies ;)
             $("#top-message").empty();  
             $("#start").empty();  
         }); 
-// event listener to on click events for the buddy buttons
-        $(document).on("click", ".buddy-button", function () {
-// this is where the setup happens for the game. the buddy you click gets appended to the arena <div id="buddy">, and all the other buddies go into the defender pool. <div id="enemybuddies">.
-            $(this).removeClass("buddy-button").addClass("chosen-buddy");
-            $(this).find(".buddy-image").removeClass("buddy-image").addClass("big-image");
-            $(this).appendTo("#buddy");
-// * SOUND * select your chosen buddy
-            $(".buddy-button").removeClass("buddy-button").addClass("enemy-button");
-// * ANIMATE * SOUND * buddybank not chosen buddies become enemybuddies
+// event listener to on click events for the bud buttons
+        $(document).on("click", ".bud-button", function () {
+// this is where the setup happens for the game. the bud you click gets appended to the arena <div id="bud">, and all the other buddies go into the defender pool. <div id="enemybuddies">.
+            $(this).removeClass("bud-button").addClass("chosen-bud");
+            $(this).find(".bud-image").removeClass("bud-image").addClass("big-image");
+            $(this).appendTo("#bud");
+// * SOUND * select your chosen bud
+            $(".bud-button").removeClass("bud-button").addClass("enemy-button");
+// * ANIMATE * SOUND * budbank not chosen buddies become enemybuddies
             $(".enemy-button").appendTo("#enemybuddies");
-// * MUSIC * chosen buddy selected
+// * MUSIC * chosen bud selected
         });
 // event listener to on click events for the enemy buttons
         $(document).on("click", ".enemy-button", function () {
@@ -112,7 +112,7 @@ $( document ).ready(function() {
             } else {
 // * SOUND * select enemy as next opponent
             $(this).removeClass("enemy-button").addClass("opponent");
-            $(this).find(".buddy-image").removeClass("buddy-image").addClass("big-image");
+            $(this).find(".bud-image").removeClass("bud-image").addClass("big-image");
             $(this).appendTo("#opponent");
             isOpponentReady = true;
 // * MUSIC * battle is possible
@@ -126,83 +126,83 @@ $( document ).ready(function() {
 // event listener for the opponent button to make the opponent leave and go back to enemybuddies also clears attack button
         $(document).on("click", ".opponent", function() {
             $(this).removeClass("opponent").addClass("enemy-button");
-            $(this).find(".big-image").removeClass("big-image").addClass("buddy-image");
+            $(this).find(".big-image").removeClass("big-image").addClass("bud-image");
             $(this).appendTo("#enemybuddies");
             $("#attack").empty();
             $("#top-message").empty();
             isOpponentReady = false;
         });
-// event listener for the chosen buddy button, such that if there is an opponent they may not retreat but if there is no opponent they may go back and also call all other buddies back to the buddybank also resetting their attack power
-        $(document).on("click", ".chosen-buddy", function () {
+// event listener for the chosen bud button, such that if there is an opponent they may not retreat but if there is no opponent they may go back and also call all other buddies back to the budbank also resetting their attack power
+        $(document).on("click", ".chosen-bud", function () {
             if (isOpponentReady) {
             $("#top-message").text(`${$(".opponent").attr("name")} is already in the arena right now`)
             } else {
-            $(this).removeClass("chosen-buddy").addClass("buddy-button");
-            $(this).find(".big-image").removeClass("big-image").addClass("buddy-image");
-            $(this).appendTo("#buddybank");
-            $(".enemy-button").removeClass("enemy-button").addClass("buddy-button");
-            $(".buddy-button").appendTo("#buddybank");
+            $(this).removeClass("chosen-bud").addClass("bud-button");
+            $(this).find(".big-image").removeClass("big-image").addClass("bud-image");
+            $(this).appendTo("#budbank");
+            $(".enemy-button").removeClass("enemy-button").addClass("bud-button");
+            $(".bud-button").appendTo("#budbank");
             }
         });
-// --> on click event listener to handle the attack being clicked pitting the chosen buddy's attack power against the opponent buddy's counter power while increasing the chosen buddy's attack power
+// --> on click event listener to handle the attack being clicked pitting the chosen bud's attack power against the opponent bud's counter power while increasing the chosen bud's attack power
         $(document).on("click", ".attack-button", function () {
             if (isOpponentReady) {
             var opponentsHitPoints = parseInt($(".opponent").attr("data-hp"));
-            var buddyHitPoints = parseInt($(".chosen-buddy").attr("data-hp"));
+            var budHitPoints = parseInt($(".chosen-bud").attr("data-hp"));
             var opponentsCounterPower = parseInt($(".opponent").attr("data-cp"));
-            var buddyAttackPower = parseInt($(".chosen-buddy").attr("data-ap"));
-            var baseAttackPower = parseInt($(".chosen-buddy").attr("data-bp"));
+            var budAttackPower = parseInt($(".chosen-bud").attr("data-ap"));
+            var baseAttackPower = parseInt($(".chosen-bud").attr("data-bp"));
 // * SOUND * ANIMATION * MUSIC * attack the opponent and the opponenet attacks back
-            opponentsHitPoints = (opponentsHitPoints - buddyAttackPower);
+            opponentsHitPoints = (opponentsHitPoints - budAttackPower);
 // ?? delay ??
-            buddyHitPoints = (buddyHitPoints - opponentsCounterPower);
+            budHitPoints = (budHitPoints - opponentsCounterPower);
 // increase attack points by their base amount
-            buddyAttackPower = (buddyAttackPower + baseAttackPower);
+            budAttackPower = (budAttackPower + baseAttackPower);
 // store those values in the html elements
             $(".opponent").attr("data-hp", opponentsHitPoints);
-            $(".chosen-buddy").attr("data-ap", buddyAttackPower);
-            $(".chosen-buddy").attr("data-hp", buddyHitPoints);
+            $(".chosen-bud").attr("data-ap", budAttackPower);
+            $(".chosen-bud").attr("data-hp", budHitPoints);
 // print those values to the buddies
             var $oppimg = $(".opponent").find('img');
-            var $budimg = $(".chosen-buddy").find('img');
+            var $budimg = $(".chosen-bud").find('img');
             $(".opponent").html($(".opponent").attr("name") + "<br>" + opponentsHitPoints);
-            $(".chosen-buddy").html($(".chosen-buddy").attr("name") + "<br>" + buddyHitPoints);
+            $(".chosen-bud").html($(".chosen-bud").attr("name") + "<br>" + budHitPoints);
             $(".opponent").append($oppimg);
-            $(".chosen-buddy").append($budimg);
+            $(".chosen-bud").append($budimg);
             } else {
-            $("#top-message").text("there is no BUDDY to fight!")    
+            $("#top-message").text("there is no bud to fight!")    
             }
-            if (buddyHitPoints < 1) {
+            if (budHitPoints < 1) {
                 alert("you died");
 // * SOUND * ANIMATE * MUSIC death game over
-                $budimg = $(".chosen-buddy").find('img');
-                $(".chosen-buddy").html($(".chosen-buddy").attr("name") + "<br>" + "dead.");
-                $budimg.removeClass("big-image").addClass("buddy-image");
-                $(".chosen-buddy").append($budimg);
-                $(".chosen-buddy").removeClass("chosen-buddy w-100").addClass("dead-buddy w-20");
-                $(".dead-buddy").appendTo("#graveyard");
+                $budimg = $(".chosen-bud").find('img');
+                $(".chosen-bud").html($(".chosen-bud").attr("name") + "<br>" + "dead.");
+                $budimg.removeClass("big-image").addClass("bud-image");
+                $(".chosen-bud").append($budimg);
+                $(".chosen-bud").removeClass("chosen-bud w-100").addClass("dead-bud w-20");
+                $(".dead-bud").appendTo("#graveyard");
                 $("#top-content").empty();
-                $("#buddy").empty();
+                $("#bud").empty();
                 $("#attack").empty();
                 $("#start").append(startButton);
                 isOpponentReady = false;
             } else if (opponentsHitPoints < 1) {
                 $oppimg = $(".opponent").find('img');
                 $(".opponent").html($(".opponent").attr("name") + "<br>" + "dead.");
-                $oppimg.removeClass("big-image").addClass("buddy-image");
+                $oppimg.removeClass("big-image").addClass("bud-image");
                 $(".opponent").append($oppimg);
-                $(".opponent").removeClass("opponent btn-warning w-100").addClass("dead-buddy btn-light w-20");  
-                $(".dead-buddy").appendTo("#graveyard");
+                $(".opponent").removeClass("opponent btn-warning w-100").addClass("dead-bud btn-light w-20");  
+                $(".dead-bud").appendTo("#graveyard");
                 $("#opponent").empty();
                 $("#attack").empty();
                 isOpponentReady = false;
-                deadBuddyCounter++;
-                if (deadBuddyCounter >= buddyArray.length - 1) {
+                deadbudCounter++;
+                if (deadbudCounter >= budArray.length - 1) {
                     alert("you win!");
 // * SOUND * ANIMATE * MUSIC yay you won all your buddies are dead
                     $("#top-content").empty();
-                    $("#buddybank").empty();
-                    $("#buddy").empty();
+                    $("#budbank").empty();
+                    $("#bud").empty();
                     $("#opponent").empty();
                     $("#enemybuddies").empty();
                     $("#attack").empty();
