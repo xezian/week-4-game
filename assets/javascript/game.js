@@ -4,6 +4,7 @@ $( document ).ready(function() {
 // this loads the window first
     $( window ).on( "load", function() {
     console.log( "window loaded" );
+// TODO - create object containing the entire game
 // created an array containing all the buds as objects
         var budArray = [
             budOne = {
@@ -56,14 +57,14 @@ $( document ).ready(function() {
         startButton.addClass("btn start-button btn-warning");
         startButton.text("START");
         $("#start").append(startButton);
-// * MUSIC * start screen music default muted (a button for that will need to be created)
+// TODO * MUSIC * start screen music default muted (a button for that will need to be created)
 // event listener to on click event to start the whole game!
         $(document).on("click", ".start-button", function() {
             $("#graveyard").empty();
             $("#opponent").empty();
             $("#enemybuds").empty();
             isOpponentReady = false;
-// * MUSIC * maybe none when you first click start
+// TODO * MUSIC * maybe none when you first click start
 // create and append buttons to the document representing the buds from the array
             for (var i = 0; i < budArray.length; i++) {
                 var budButton = $("<button>");
@@ -81,7 +82,7 @@ $( document ).ready(function() {
                 budButton.append(budImage);
                 $("#budbank").append(budButton);
                 deadbudCounter = 0;
-// * ANIMATE * SOUND each bud has it's own special sound here
+// TODO * ANIMATE * SOUND each bud should have it's own special sound here
             }
 // remove the start button after it's been clicked and set loose the buds ;)
             $("#top-message").empty();  
@@ -93,25 +94,25 @@ $( document ).ready(function() {
             $(this).removeClass("bud-button").addClass("chosen-bud");
             $(this).find(".bud-image").removeClass("bud-image").addClass("big-image");
             $(this).appendTo("#bud");
-// * SOUND * select your chosen bud
+// TODO * SOUND * select your chosen bud
             $(".bud-button").removeClass("bud-button").addClass("enemy-button");
-// * ANIMATE * SOUND * budbank not chosen buds become enemybuds
+// TODO * ANIMATE * SOUND * budbank not chosen buds become enemybuds
             $(".enemy-button").appendTo("#enemybuds");
-// * MUSIC * chosen bud selected
+// TODO * MUSIC * chosen bud selected
         });
 // event listener to on click events for the enemy buttons
         $(document).on("click", ".enemy-button", function () {
             $("#top-message").empty();  
             if (isOpponentReady) {
             $("#top-message").text(`${$(".opponent").attr("name")} is already in the arena right now`)
-// * SOUND * attempt to select enemy enemy already selected
+// TODO * SOUND * attempt to select enemy enemy already selected
             } else {
-// * SOUND * select enemy as next opponent
+// TODO * SOUND * select enemy as next opponent
             $(this).removeClass("enemy-button").addClass("opponent");
             $(this).find(".bud-image").removeClass("bud-image").addClass("big-image");
             $(this).appendTo("#opponent");
             isOpponentReady = true;
-// * MUSIC * battle is possible
+// TODO * MUSIC * battle is possible
 // create and append button for attack
             var attackButton = $("<button>");
             attackButton.addClass("btn attack-button btn-danger");
@@ -140,7 +141,7 @@ $( document ).ready(function() {
             $(".bud-button").appendTo("#budbank");
             }
         });
-// --> on click event listener to handle the attack being clicked pitting the chosen bud's attack power against the opponent bud's counter power while increasing the chosen bud's attack power
+// on click event listener to handle the attack being clicked pitting the chosen bud's attack power against the opponent bud's counter power while increasing the chosen bud's attack power
         $(document).on("click", ".attack-button", function () {
             if (isOpponentReady) {
             var opponentsHitPoints = parseInt($(".opponent").attr("data-hp"));
@@ -148,9 +149,9 @@ $( document ).ready(function() {
             var opponentsCounterPower = parseInt($(".opponent").attr("data-cp"));
             var budAttackPower = parseInt($(".chosen-bud").attr("data-ap"));
             var baseAttackPower = parseInt($(".chosen-bud").attr("data-bp"));
-// * SOUND * ANIMATION * MUSIC * attack the opponent and the opponenet attacks back
+// TODO * SOUND * ANIMATION * MUSIC * attack the opponent and the opponenet attacks back
             opponentsHitPoints = (opponentsHitPoints - budAttackPower);
-// ?? delay ??
+// TODO ?? delay ?? setTimeout function
             budHitPoints = (budHitPoints - opponentsCounterPower);
 // increase attack points by their base amount
             budAttackPower = (budAttackPower + baseAttackPower);
@@ -170,7 +171,7 @@ $( document ).ready(function() {
             }
             if (budHitPoints < 1) {
                 alert("you died");
-// * SOUND * ANIMATE * MUSIC death game over
+// TODO * SOUND * ANIMATE * MUSIC death game over
                 $budimg = $(".chosen-bud").find('img');
                 $(".chosen-bud").html($(".chosen-bud").attr("name") + "<br>" + "dead.");
                 $budimg.removeClass("big-image").addClass("bud-image");
@@ -195,7 +196,7 @@ $( document ).ready(function() {
                 deadbudCounter++;
                 if (deadbudCounter >= budArray.length - 1) {
                     alert("you win!");
-// * SOUND * ANIMATE * MUSIC yay you won all your buds are dead
+// TODO * SOUND * ANIMATE * MUSIC yay you won all your buds are dead
                     $("#top-content").empty();
                     $("#budbank").empty();
                     $("#bud").empty();
@@ -208,5 +209,3 @@ $( document ).ready(function() {
         })
     });
 });
-
-
