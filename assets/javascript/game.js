@@ -92,7 +92,7 @@ $( document ).ready(function() {
         $(document).on("click", ".bud-button", function () {
 // this is where the setup happens for the game. the bud you click gets appended to the arena <div id="bud">, and all the other buds go into the defender pool. <div id="enemybuds">.
             $("#top-message").html("Please select your first Enemy Bud");
-            $(this).removeClass("bud-button").addClass("chosen-bud");
+            $(this).removeClass("bud-button btn btn-light text-white").addClass("chosen-bud text-black");
             $(this).find(".bud-image").removeClass("bud-image").addClass("big-image");
             $(this).appendTo("#bud");
 // TODO * SOUND * select your chosen bud
@@ -109,7 +109,7 @@ $( document ).ready(function() {
 // TODO * SOUND * attempt to select enemy enemy already selected
             } else {
 // TODO * SOUND * select enemy as next opponent
-            $(this).removeClass("enemy-button").addClass("opponent");
+            $(this).removeClass("enemy-button btn btn-light text-white").addClass("opponent text-black");
             $(this).find(".bud-image").removeClass("bud-image").addClass("big-image");
             $(this).appendTo("#opponent");
             isOpponentReady = true;
@@ -123,11 +123,11 @@ $( document ).ready(function() {
         });
 // event listener for the opponent button to make the opponent leave and go back to enemybuds also clears attack button
         $(document).on("click", ".opponent", function() {
-            $(this).removeClass("opponent").addClass("enemy-button");
+            $(this).removeClass("opponent text-black").addClass("enemy-button btn btn-light text-white");
             $(this).find(".big-image").removeClass("big-image").addClass("bud-image");
             $(this).appendTo("#enemybuds");
             $("#attack").empty();
-            $("#top-message").empty();
+            $("#top-message").html("Please select your next Enemy Bud!");
             isOpponentReady = false;
         });
 // event listener for the chosen bud button, such that if there is an opponent they may not retreat but if there is no opponent they may go back and also call all other buds back to the budbank also resetting their attack power
@@ -173,7 +173,7 @@ $( document ).ready(function() {
                 $(".chosen-bud").html($(".chosen-bud").attr("name") + "<br>" + "dead.");
                 $budimg.removeClass("big-image").addClass("bud-image");
                 $(".chosen-bud").append($budimg);
-                $(".chosen-bud").removeClass("chosen-bud").addClass("dead-bud w-20");
+                $(".chosen-bud").removeClass("chosen-bud text-black").addClass("dead-bud w-20 btn btn-light text-white");
                 $(".dead-bud").appendTo("#graveyard");
                 $("#top-content").empty();
                 $("#bud").empty();
@@ -186,7 +186,7 @@ $( document ).ready(function() {
                 $(".opponent").html($(".opponent").attr("name") + "<br>" + "dead.");
                 $oppimg.removeClass("big-image").addClass("bud-image");
                 $(".opponent").append($oppimg);
-                $(".opponent").removeClass("opponent").addClass("dead-bud w-20");  
+                $(".opponent").removeClass("opponent text-black").addClass("dead-bud w-20 btn btn-light text-white");  
                 $(".dead-bud").appendTo("#graveyard");
                 $("#opponent").empty();
                 $("#attack").empty();

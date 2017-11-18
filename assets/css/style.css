@@ -31,8 +31,8 @@ div {
     height: 16vw;
 }
 .big-image {
-    width: 20vw;
-    height: 27vw;
+    width: 21vw;
+    height: 29vw;
 }
 .bud-button {
     width: 20vw;
@@ -45,16 +45,16 @@ div {
     background-color: rgba(163, 46, 95, 0.33);
 }
 .chosen-bud {
-    width:45vh;
-    height:45vh;
-    margin: auto;
-    background-color: rgba(46, 106, 163, 0.33);
+    margin-left: 0px;
+    background-color: transparent;
+    font-weight: bold;
+    border: none;
 }
 .opponent {
-    width:45vh;
-    height:45vh;
-    margin: auto;
-    background-color: rgba(212, 54, 88, 0.33);
+    margin-left: 0px;
+    background-color: transparent;
+    font-weight: bold;
+    border: none;
 }
 .dead-bud {
     width: auto;
@@ -64,6 +64,8 @@ div {
 .bud-button, .enemy-button, .chosen-bud, .opponent, .dead-bud {
     justify-content: center;
     border-radius: 50%;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .footer {
     position: absolute;
@@ -71,6 +73,16 @@ div {
     text-align: center;
     height: 5vh;
     background-color: #70776b;
+}
+#graveyard, #arena, #budbank, #enemybuds {
+    border: 1px solid rgba(46, 46, 163, 0.33);
+}
+.top-three, .label, #attack, #top-message {
+    background-color: rgba(112, 163, 46, 0.33);
+    border: 1px solid rgba(46, 46, 163, 0.33);
+}
+#bud, #oppoonent {
+    padding: 0;
 }
 #budbank, #enemybuds {
     position: relative;
