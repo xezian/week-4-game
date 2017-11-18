@@ -85,12 +85,13 @@ $( document ).ready(function() {
 // TODO * ANIMATE * SOUND each bud should have it's own special sound here
             }
 // remove the start button after it's been clicked and set loose the buds ;)
-            $("#top-message").empty();  
+            $("#top-message").html("Please select your preferred Bud from the Buddy Buds column on the left"); 
             $("#start").empty();  
         }); 
 // event listener to on click events for the bud buttons
         $(document).on("click", ".bud-button", function () {
 // this is where the setup happens for the game. the bud you click gets appended to the arena <div id="bud">, and all the other buds go into the defender pool. <div id="enemybuds">.
+            $("#top-message").html("Please select your first Enemy Bud");
             $(this).removeClass("bud-button").addClass("chosen-bud");
             $(this).find(".bud-image").removeClass("bud-image").addClass("big-image");
             $(this).appendTo("#bud");
@@ -102,7 +103,7 @@ $( document ).ready(function() {
         });
 // event listener to on click events for the enemy buttons
         $(document).on("click", ".enemy-button", function () {
-            $("#top-message").empty();  
+            $("#top-message").html("Click 'Attack' if you dare attack your chosen Enemy Bud");
             if (isOpponentReady) {
             $("#top-message").text(`${$(".opponent").attr("name")} is already in the arena right now`)
 // TODO * SOUND * attempt to select enemy enemy already selected
@@ -132,13 +133,9 @@ $( document ).ready(function() {
 // event listener for the chosen bud button, such that if there is an opponent they may not retreat but if there is no opponent they may go back and also call all other buds back to the budbank also resetting their attack power
         $(document).on("click", ".chosen-bud", function () {
             if (isOpponentReady) {
-            $("#top-message").text(`${$(".opponent").attr("name")} is already in the arena right now`)
+            $("#top-message").html(`${$(".opponent").attr("name")} is already in the arena right now! <br> Battle ${$(".opponent").attr("name")} or choose another Enemy Bud.`)
             } else {
-            $(this).removeClass("chosen-bud").addClass("bud-button");
-            $(this).find(".big-image").removeClass("big-image").addClass("bud-image");
-            $(this).appendTo("#budbank");
-            $(".enemy-button").removeClass("enemy-button").addClass("bud-button");
-            $(".bud-button").appendTo("#budbank");
+            $("#top-message").html(`Sorry! ${$(".chosen-bud").attr("name")} may not leave the arena unless they: <br> A) Die and go to the Graveyard. <br> B) Kill all the other Buds.`)
             }
         });
 // on click event listener to handle the attack being clicked pitting the chosen bud's attack power against the opponent bud's counter power while increasing the chosen bud's attack power
@@ -170,7 +167,7 @@ $( document ).ready(function() {
             $("#top-message").text("there is no bud to fight!")    
             }
             if (budHitPoints < 1) {
-                alert("you died");
+                $("#top-message").text("You died!"); 
 // TODO * SOUND * ANIMATE * MUSIC death game over
                 $budimg = $(".chosen-bud").find('img');
                 $(".chosen-bud").html($(".chosen-bud").attr("name") + "<br>" + "dead.");
@@ -184,6 +181,7 @@ $( document ).ready(function() {
                 $("#start").append(startButton);
                 isOpponentReady = false;
             } else if (opponentsHitPoints < 1) {
+                $("#top-message").html("Please select your next Enemy Bud!");
                 $oppimg = $(".opponent").find('img');
                 $(".opponent").html($(".opponent").attr("name") + "<br>" + "dead.");
                 $oppimg.removeClass("big-image").addClass("bud-image");
@@ -195,9 +193,8 @@ $( document ).ready(function() {
                 isOpponentReady = false;
                 deadbudCounter++;
                 if (deadbudCounter >= budArray.length - 1) {
-                    alert("you win!");
+                    $("#top-message").html("Yay! You win! <br> (and all your Buds are dead...)");
 // TODO * SOUND * ANIMATE * MUSIC yay you won all your buds are dead
-                    $("#top-content").empty();
                     $("#budbank").empty();
                     $("#bud").empty();
                     $("#opponent").empty();
