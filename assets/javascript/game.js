@@ -58,6 +58,23 @@ $( document ).ready(function() {
         startButton.text("START");
         $("#start").append(startButton);
 // TODO * MUSIC * start screen music default muted (a button for that will need to be created)
+        var gameMusic = new Audio("assets/sounds/strange-noises.mp3");
+        gameMusic.autoplay = true;
+        gameMusic.muted  = true;
+        var soundButton = $("<button>");
+        soundButton.addClass("btn btn-info sound-button");
+        soundButton.text("MUSIC");
+        $("#sound").append(soundButton);
+// event click listener to handle un-muting and muting
+        $(document).on("click", ".sound-button", function() {
+            if (gameMusic.muted) {
+                $(this).text("MUTE");
+                gameMusic.muted = false;
+            } else {
+                $(this).text("MUSIC");
+                gameMusic.muted = true;
+            }
+        });
 // event listener to on click event to start the whole game!
         $(document).on("click", ".start-button", function() {
             $("#graveyard").empty();
